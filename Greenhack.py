@@ -58,6 +58,25 @@ key_a = {
     "target": door_a,
 }
 
+key_b = {
+    "name": "key for door b",
+    "type": "key",
+    "target": door_b,
+}
+
+key_c = {
+    "name": "key for door c",
+    "type": "key",
+    "target": door_c,
+}
+
+key_d = {
+    "name": "key for door d",
+    "type": "key",
+    "target": door_d,
+}
+
+
 piano = {
     "name": "piano",
     "type": "furniture",
@@ -88,17 +107,27 @@ outside = {
   "name": "outside"
 }
 
-all_rooms = [game_room, outside]
+all_rooms = [game_room, outside, bed_room_1, bed_room_2, living_room]
 
-all_doors = [door_a]
+all_doors = [door_a,door_b,door_c,door_d]
 
 # define which items/rooms are related
 
 object_relations = {
     "game room": [couch, piano, door_a],
     "piano": [key_a],
-    "outside": [door_a],
-    "door a": [game_room, outside]
+    "queen bed": [key_b],
+    "double bed": [key_c],
+    "dresser": [key_d],
+    "outside": [door_a,door_b,door_c,door_d],
+    "door a": [game_room, bed_room_1],
+    "door b": [bed_room_2, bed_room_1],
+    "door c": [bed_room_1, living_room],
+    "door d": [living_room, outside],
+    "bedroom 1": [queen_bed, door_a, door_b, door_c],
+    "bedroom 2": [double_bed, door_b, dresser],
+    "living room": [dining_table, door_d]
+    
 }
 
 # define game state. Do not directly change this dict. 
@@ -208,7 +237,7 @@ def examine_item(item_name):
     if(output is None):
         print("The item you requested is not found in the current room.")
     
-    if(next_room and input("Do you want to go to the next room? Ener 'yes' or 'no'").strip() == 'yes'):
+    if(next_room and input("Do you want to go to the next room? Enter 'yes' or 'no'").strip() == 'yes'):
         play_room(next_room)
     else:
         play_room(current_room)
