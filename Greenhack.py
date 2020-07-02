@@ -1,8 +1,4 @@
-"""
-Created on Wed Jul  1 12:43:56 2020
 
-@author: casualfriday
-"""
 
 # define rooms and items
 
@@ -140,6 +136,23 @@ INIT_GAME_STATE = {
     "target_room": outside
 }
 
+from JI import plotter
+from JI import plot_winner
+import matplotlib.pyplot as plt
+import imageio
+import numpy as np
+
+global item_name2
+if INIT_GAME_STATE["current_room"]==game_room:
+    item_name2 = "couch"
+elif INIT_GAME_STATE["current_room"]==bed_room_1:
+    item_name2 = "door a"
+elif INIT_GAME_STATE["current_room"]==bed_room_2:
+    item_name2 = "door b"
+elif INIT_GAME_STATE["current_room"]==living_room:
+    item_name2 = "door c"
+else:
+    item_name2 = "door d"
 
 written_text=""
 answer=""
@@ -148,7 +161,7 @@ def linebreak():
     """
     Print a line break
     """
-    print("\n\n")
+    print("\n")
 
 def start_game():
     """
@@ -157,20 +170,6 @@ def start_game():
     print("You wake up on a couch and find yourself in a strange house with no windows which you have never been to before. You don't remember why you are here and what had happened before. You feel some unknown danger is approaching and you must get out of the house, NOW!")
     play_room(game_state["current_room"])
     answer_format()
-
-def answer_format():
-    answer_format=input("Choose how to answer: Write or Speak (write one of the 2)")
-    if answer_format=="write":
-        answer= input("What would you like to do? Type 'explore' or 'examine'?").strip()
-        return answer
-    elif answer_format=="speak":
-        print("What would you like to do? Speak 'explore' or 'examine'?")
-        answer=spoken_text()
-        return answer
-    else:
-        print("Please choose ONE of the two options: 'write' or 'speak'.")
-    
-
 
 #import library of speech recognition
 import speech_recognition as sr
@@ -191,17 +190,34 @@ def spoken_text():
         except:
              print("Sorry, I did not get that")
 
+def answer_format():
+    answer_format=input("Choose how to answer: write or speak (write one of the 2)")
+    if answer_format=="write":
+        answer= input("What would you like to do? Type 'explore' or 'examine'?").strip()
+        return answer
+    elif answer_format=="speak":
+        print("What would you like to do? Speak 'explore' or 'examine'?")
+        answer=spoken_text()
+        return answer
+    else:
+        print("Please choose ONE of the two options: 'write' or 'speak'.")  
+
+
 def play_room(room):
     """
     Play a room. First check if the room being played is the target room.
     If it is, the game will end with success. Otherwise, let player either 
     explore (list all items in this room) or examine an item found here.
     """
+    global item_name2
     game_state["current_room"] = room
     if(game_state["current_room"] == game_state["target_room"]):
-        print("Congrats! You escaped the room!")
+        print("Congrats! You escaped the room and won the game!")
+        plotter(game_state["current_room"]["name"],str(item_name2))
+        plot_winner("Now, Let's cut that hair!!!",25)
     else:
         print("You are now in " + room["name"])
+        plotter(game_state["current_room"]["name"],str(item_name2))
         intended_action=answer_format()
         if intended_action == "explore":
             explore_room(room)
@@ -242,11 +258,14 @@ def examine_item(item_name):
     current_room = game_state["current_room"]
     next_room = ""
     output = None
+    global item_name2
     
     for item in object_relations[current_room["name"]]:
         if(item["name"] == item_name):
+            item_name2 = item_name
             output = "You examine " + item_name + ". "
             if(item["type"] == "door"):
+                plotter(game_state["current_room"]["name"],str(item_name))
                 have_key = False
                 for key in game_state["keys_collected"]:
                     if(key["target"] == item):
@@ -279,4 +298,5 @@ def examine_item(item_name):
 game_state = INIT_GAME_STATE.copy()
 
 start_game()
+
 
