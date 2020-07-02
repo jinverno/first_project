@@ -137,8 +137,10 @@ INIT_GAME_STATE = {
 }
 
 from JI import plotter
+from JI import plot_winner
 import matplotlib.pyplot as plt
 import imageio
+import numpy as np
 
 global item_name2
 if INIT_GAME_STATE["current_room"]==game_room:
@@ -212,6 +214,7 @@ def play_room(room):
     if(game_state["current_room"] == game_state["target_room"]):
         print("Congrats! You escaped the room and won the game!")
         plotter(game_state["current_room"]["name"],str(item_name2))
+        plot_winner("Now, Let's cut that hair!!!",25)
     else:
         print("You are now in " + room["name"])
         plotter(game_state["current_room"]["name"],str(item_name2))

@@ -54,19 +54,18 @@ def plotter(room,where="couch"):
     plt.imshow(pedro)
     plt.show()
 
-plotter("game room")
-def plot_winner(a):
-    win = imageio.imread('./images/'+'winner2'+'.jpg')
-    plt.figure(figsize=(13,10))
-    plt.rcParams["axes.edgecolor"] = "green"
-    plt.rcParams["axes.linewidth"] = 2
-    plt.xticks([])
-    plt.yticks([])
-    plt.imshow(win)
-    plt.annotate(str(a), (40,85),color="g",backgroundcolor="w", size=20)
-    plt.annotate
-    plt.show()
 
-plot_winner("Let's cut that air")
-
-    
+def plot_winner(printme,rep):
+    i=0
+    while i<rep:  
+        win = imageio.imread('./images/'+'winner2'+'.jpg')
+        plt.figure(figsize=(13,10))
+        plt.rcParams["axes.edgecolor"] = "green"
+        plt.rcParams["axes.linewidth"] = 2
+        plt.xticks([])
+        plt.yticks([])
+        plt.imshow(win)
+        plt.annotate("Congrats! You escaped the room and won the game!",(80,80),color="r", size=25)
+        plt.annotate(str(printme), ((np.random.randint(80,1275)),(np.random.randint(100,1200))),color="r",backgroundcolor="lime", size=25)
+        im=plt.show()
+        i+=1
