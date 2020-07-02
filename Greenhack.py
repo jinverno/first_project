@@ -210,7 +210,7 @@ def play_room(room):
     global item_name2
     game_state["current_room"] = room
     if(game_state["current_room"] == game_state["target_room"]):
-        print("Congrats! You escaped the room!")
+        print("Congrats! You escaped the room and won the game!")
         plotter(game_state["current_room"]["name"],str(item_name2))
     else:
         print("You are now in " + room["name"])

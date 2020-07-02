@@ -6,6 +6,7 @@ Created on Wed Jul  1 17:27:44 2020
 """
 import matplotlib.pyplot as plt
 import imageio
+import numpy as np
 def plotter(room,where="couch"):
     
     plan_paths={"game room": "escape-room-plan-gameroom",
@@ -52,3 +53,20 @@ def plotter(room,where="couch"):
     plt.yticks([])
     plt.imshow(pedro)
     plt.show()
+
+plotter("game room")
+def plot_winner(a):
+    win = imageio.imread('./images/'+'winner2'+'.jpg')
+    plt.figure(figsize=(13,10))
+    plt.rcParams["axes.edgecolor"] = "green"
+    plt.rcParams["axes.linewidth"] = 2
+    plt.xticks([])
+    plt.yticks([])
+    plt.imshow(win)
+    plt.annotate(str(a), (40,85),color="g",backgroundcolor="w", size=20)
+    plt.annotate
+    plt.show()
+
+plot_winner("Let's cut that air")
+
+    
