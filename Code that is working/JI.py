@@ -6,7 +6,6 @@ Created on Wed Jul  1 17:27:44 2020
 """
 import matplotlib.pyplot as plt
 import imageio
-import numpy as np
 def plotter(room,where="couch"):
     
     plan_paths={"game room": "escape-room-plan-gameroom",
@@ -53,8 +52,7 @@ def plotter(room,where="couch"):
     plt.yticks([])
     plt.imshow(pedro)
     plt.show()
-
-
+    
 def plot_winner(printme,rep):
     i=0
     while i<rep:  
@@ -69,4 +67,3 @@ def plot_winner(printme,rep):
         plt.annotate(str(printme), ((np.random.randint(80,1270)),(np.random.randint(100,1200))),color="r",backgroundcolor="lime", size=25)
         im=plt.show()
         i+=1
-
